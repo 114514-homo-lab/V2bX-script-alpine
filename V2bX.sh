@@ -80,7 +80,7 @@ before_show_menu() {
 }
 
 install() {
-    bash <(curl -Ls https://raw.githubusercontents.com/InazumaV/V2bX-script/master/install.sh)
+    bash <(curl -Ls https://raw.githubusercontents.com/114514-homo-lab/V2bX-script/master/install.sh)
     if [[ $? == 0 ]]; then
         if [[ $# == 0 ]]; then
             start
@@ -96,7 +96,7 @@ update() {
     else
         version=$2
     fi
-    bash <(curl -Ls https://raw.githubusercontents.com/InazumaV/V2bX-script/master/install.sh) $version
+    bash <(curl -Ls https://raw.githubusercontents.com/114514-homo-lab/V2bX-script/master/install.sh) $version
     if [[ $? == 0 ]]; then
         echo -e "${green}更新完成，已自动重启 V2bX，请使用 V2bX log 查看运行日志${plain}"
         exit
@@ -109,7 +109,7 @@ update() {
 
 config() {
     echo "V2bX在修改配置后会自动尝试重启"
-    vi /etc/V2bX/config.yml
+    vi /etc/V2bX/config.json
     sleep 2
     check_status
     case $? in
@@ -249,7 +249,7 @@ install_bbr() {
 }
 
 update_shell() {
-    wget -O /usr/bin/V2bX -N --no-check-certificate https://raw.githubusercontent.com/InazumaV/V2bX-script/master/V2bX.sh
+    wget -O /usr/bin/V2bX -N --no-check-certificate https://raw.githubusercontent.com/114514-homo-lab/V2bX-script/master/V2bX.sh
     if [[ $? != 0 ]]; then
         echo ""
         echo -e "${red}下载脚本失败，请检查本机能否连接 Github${plain}"
@@ -594,7 +594,7 @@ EOF
                     "regexp:(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)",
                     "regexp:(..||)(dafahao|mingjinglive|botanwang|minghui|dongtaiwang|falunaz|epochtimes|ntdtv|falundafa|falungong|wujieliulan|zhengjian).(org|com|net)",
                     "regexp:(ed2k|.torrent|peer_id=|announce|info_hash|get_peers|find_node|BitTorrent|announce_peer|announce.php?passkey=|magnet:|xunlei|sandai|Thunder|XLLiveUD|bt_key)",
-                    "regexp:(.+.|^)(360|speedtest|fast).(cn|com|net)",
+                    "regexp:(.+.|^)(360|fast).(cn|com|net)",
                     "regexp:(.*.||)(guanjia.qq.com|qqpcmgr|QQPCMGR)",
                     "regexp:(.*.||)(rising|kingsoft|duba|xindubawukong|jinshanduba).(com|net|org)",
                     "regexp:(.*.||)(netvigator|torproject).(com|cn|net|org)",

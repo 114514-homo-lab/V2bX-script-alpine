@@ -577,13 +577,6 @@ EOF
             },
             {
                 "type": "field",
-                "outboundTag": "direct",
-                "domain": [
-                    "domain:zgovps.com"
-                ]
-            },
-            {
-                "type": "field",
                 "outboundTag": "block",
                 "domain": [
                     "regexp:(api|ps|sv|offnavi|newvector|ulog.imap|newloc)(.map|).(baidu|n.shifen).com",
@@ -631,7 +624,7 @@ EOF
             {
                 "type": "field",
                 "outboundTag": "block",
-                "port": "23,24,25,107,194,445,465,587,992,3389,6665-6669,6679,6697,6881-6999,7000"
+                "port": "22,23,24,25,107,194,445,465,587,992,3389,6665-6669,6679,6697,6881-6999,7000"
             }
         ]
     }

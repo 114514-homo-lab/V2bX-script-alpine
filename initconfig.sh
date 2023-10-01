@@ -225,13 +225,6 @@ EOF
             },
             {
                 "type": "field",
-                "outboundTag": "direct",
-                "domain": [
-                    "domain:zgovps.com"
-                ]
-            },
-            {
-                "type": "field",
                 "outboundTag": "block",
                 "domain": [
                     "regexp:(api|ps|sv|offnavi|newvector|ulog.imap|newloc)(.map|).(baidu|n.shifen).com",

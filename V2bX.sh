@@ -507,8 +507,9 @@ generate_config_file() {
                 \"Level\": \"error\",
                 \"Timestamp\": true
             },
+            \"OriginalPath\": \"/etc/V2bX/sing_origin.json\",
             \"NTP\": {
-                \"Enable\": true,
+                \"Enable\": false,
                 \"Server\": \"time.apple.com\",
                 \"ServerPort\": 0
             }

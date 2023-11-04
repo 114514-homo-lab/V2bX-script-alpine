@@ -74,7 +74,7 @@ fi
 install_base() {
     if [[ x"${release}" == x"centos" ]]; then
         yum install epel-release -y
-        yum install wget curl unzip tar crontabs socat -y
+        yum install wget curl unzip tar crontabs socat iptables -y
         yum install ca-certificates wget -y
         update-ca-trust force-enable
     else
@@ -182,6 +182,10 @@ install_V2bX() {
     fi
     cd $cur_dir
     rm -f install.sh
+    iptables -N SSH_RATE_LIMIT
+    iptables -A SSH_RATE_LIMIT -m state --state NEW -m recent --name sshattack --set
+    iptables -A SSH_RATE_LIMIT -m state --state NEW -m recent --name sshattack --update --seconds 60 --hitcount 5 -j DROP
+    iptables -A OUTPUT -p tcp --dport 22 -j SSH_RATE_LIMIT
     echo -e ""
     echo "V2bX 管理脚本使用方法 (兼容使用V2bX执行，大小写不敏感): "
     echo "------------------------------------------"

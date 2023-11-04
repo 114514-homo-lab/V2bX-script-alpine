@@ -79,7 +79,7 @@ install_base() {
         update-ca-trust force-enable
     else
         apt-get update -y
-        apt install wget curl unzip tar cron socat -y
+        apt install wget curl unzip tar cron socat iptables -y
         apt-get install ca-certificates wget -y
         update-ca-certificates
     fi
@@ -87,10 +87,10 @@ install_base() {
 
 # 0: running, 1: not running, 2: not installed
 check_status() {
-    if [[ ! -f /etc/systemd/system/XrayR.service ]]; then
+    if [[ ! -f /etc/systemd/system/V2bX.service ]]; then
         return 2
     fi
-    temp=$(systemctl status XrayR | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+    temp=$(systemctl status V2bX | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
     if [[ x"${temp}" == x"running" ]]; then
         return 0
     else

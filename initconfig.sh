@@ -299,14 +299,7 @@ EOF
                 "outboundTag": "block",
                 "ip": [
                     "geoip:private",
-                    "geoip:cn"
-                ]
-            },
-            {
-                "type": "field",
-                "outboundTag": "block",
-                "domain": [
-                    "geosite:cn"
+                    "58.87.70.69"
                 ]
             },
             {
@@ -321,12 +314,12 @@ EOF
                     "regexp:(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)",
                     "regexp:(..||)(dafahao|mingjinglive|botanwang|minghui|dongtaiwang|falunaz|epochtimes|ntdtv|falundafa|falungong|wujieliulan|zhengjian).(org|com|net)",
                     "regexp:(ed2k|.torrent|peer_id=|announce|info_hash|get_peers|find_node|BitTorrent|announce_peer|announce.php?passkey=|magnet:|xunlei|sandai|Thunder|XLLiveUD|bt_key)",
-                    "regexp:(.+.|^)(360).(cn|com|net)",
+                    "regexp:(.+.|^)(360|fast).(cn|com|net)",
                     "regexp:(.*.||)(guanjia.qq.com|qqpcmgr|QQPCMGR)",
                     "regexp:(.*.||)(rising|kingsoft|duba|xindubawukong|jinshanduba).(com|net|org)",
                     "regexp:(.*.||)(netvigator|torproject).(com|cn|net|org)",
-                    "regexp:(..||)(visa|mycard|gash|beanfun|bank).",
-                    "regexp:(.*.||)(gov|12377|12315|talk.news.pts.org|creaders|zhuichaguoji|efcc.org|cyberpolice|aboluowang|tuidang|epochtimes|zhengjian|110.qq|mingjingnews|inmediahk|xinsheng|breakgfw|chengmingmag|jinpianwang|qi-gong|mhradio|edoors|renminbao|soundofhope|xizang-zhiye|bannedbook|ntdtv|12321|secretchina|dajiyuan|boxun|chinadigitaltimes|dwnews|huaglad|oneplusnews|epochweekly|cn.rfi).(cn|com|org|net|club|net|fr|tw|hk|eu|info|me)",
+                    "regexp:(..||)(visa|mycard|gov|gash|beanfun|bank).",
+                    "regexp:(.*.||)(gov|12377|12315|talk.news.pts.org|creaders|zhuichaguoji|efcc.org|cyberpolice|aboluowang|tuidang|epochtimes|nytimes|zhengjian|110.qq|mingjingnews|inmediahk|xinsheng|breakgfw|chengmingmag|jinpianwang|qi-gong|mhradio|edoors|renminbao|soundofhope|xizang-zhiye|bannedbook|ntdtv|12321|secretchina|dajiyuan|boxun|chinadigitaltimes|dwnews|huaglad|oneplusnews|epochweekly|cn.rfi).(cn|com|org|net|club|net|fr|tw|hk|eu|info|me)",
                     "regexp:(.*.||)(miaozhen|cnzz|talkingdata|umeng).(cn|com)",
                     "regexp:(.*.||)(mycard).(com|tw)",
                     "regexp:(.*.||)(gash).(com|tw)",
@@ -354,6 +347,11 @@ EOF
                 "protocol": [
                     "bittorrent"
                 ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "block",
+                "port": "23,24,25,107,194,445,465,587,992,3389,6665-6669,6679,6697,6881-6999,7000"
             }
         ]
     }

@@ -444,7 +444,7 @@ show_menu() {
         12) check_install && show_V2bX_version ;;
         13) check_install && generate_x25519_key ;;
         14) update_shell ;;
-        15) generate_config_file ;;
+        15) add_node_config ;;
         16) open_ports ;;
         *) echo -e "${red}请输入正确的数字 [0-16]${plain}" ;;
     esac

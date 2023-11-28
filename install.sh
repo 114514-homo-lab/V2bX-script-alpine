@@ -105,7 +105,7 @@ install_V2bX() {
 
     mkdir /usr/local/V2bX/ -p
     cd /usr/local/V2bX/
-
+    
     if  [ $# == 0 ] ;then
         last_version=$(curl -Ls "https://api.github.com/repos/wyx2685/V2bX/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then

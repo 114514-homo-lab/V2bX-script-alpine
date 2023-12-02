@@ -113,7 +113,7 @@ install_V2bX() {
             exit 1
         fi
         echo -e "检测到 V2bX 最新版本：${last_version}，开始安装"
-        wget -q -N --no-check-certificate -O /usr/local/V2bX/V2bX-linux.zip https://github.com/wyx2685/V2bX/releases/download/${last_version}/V2bX-linux-${arch}.zip
+        wget -N --no-check-certificate -O /usr/local/V2bX/V2bX-linux.zip https://github.com/wyx2685/V2bX/releases/download/${last_version}/V2bX-linux-${arch}.zip
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 V2bX 失败，请确保你的服务器能够下载 Github 的文件${plain}"
             exit 1

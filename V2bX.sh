@@ -96,7 +96,7 @@ update() {
     else
         version=$2
     fi
-    bash <(curl -Ls https://raw.githubusercontents.com/114514-homo-lab/V2bX-script/master/install.sh) $version
+    bash <(curl -Ls https://raw.githubusercontent.com/114514-homo-lab/V2bX-script/master/install.sh) $version
     if [[ $? == 0 ]]; then
         echo -e "${green}更新完成，已自动重启 V2bX，请使用 V2bX log 查看运行日志${plain}"
         exit

@@ -10,25 +10,13 @@ cur_dir=$(pwd)
 # check root
 [[ $EUID -ne 0 ]] && echo -e "${red}错误：${plain} 必须使用root用户运行此脚本！\n" && exit 1
 
-# check os
-if [[ -f /etc/redhat-release ]]; then
-    release="centos"
-elif cat /etc/issue | grep -Eqi "debian"; then
-    release="debian"
-elif cat /etc/issue | grep -Eqi "ubuntu"; then
-    release="ubuntu"
-elif cat /etc/issue | grep -Eqi "centos|red hat|redhat|rocky|alma|oracle linux"; then
-    release="centos"
-elif cat /proc/version | grep -Eqi "debian"; then
-    release="debian"
-elif cat /proc/version | grep -Eqi "ubuntu"; then
-    release="ubuntu"
-elif cat /proc/version | grep -Eqi "centos|red hat|redhat|rocky|alma|oracle linux"; then
-    release="centos"
-else
-    echo -e "${red}未检测到系统版本，请联系脚本作者！${plain}\n" && exit 1
+# 检查系统是否为Alpine
+if ! grep -qi "Alpine" /etc/os-release; then
+     echo "${red}该脚本仅支持Alpine系统${plain}"
+     exit 1
 fi
 
+#检测系统架构
 arch=$(arch)
 
 if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
@@ -49,48 +37,27 @@ if [ "$(getconf WORD_BIT)" != '32' ] && [ "$(getconf LONG_BIT)" != '64' ] ; then
     exit 2
 fi
 
-# os version
-if [[ -f /etc/os-release ]]; then
-    os_version=$(awk -F'[= ."]' '/VERSION_ID/{print $3}' /etc/os-release)
-fi
-if [[ -z "$os_version" && -f /etc/lsb-release ]]; then
-    os_version=$(awk -F'[= ."]+' '/DISTRIB_RELEASE/{print $2}' /etc/lsb-release)
-fi
-
-if [[ x"${release}" == x"centos" ]]; then
-    if [[ ${os_version} -le 6 ]]; then
-        echo -e "${red}请使用 CentOS 7 或更高版本的系统！${plain}\n" && exit 1
+  if ! command -v sudo >/dev/null 2>&1; then
+        apk add sudo
     fi
-elif [[ x"${release}" == x"ubuntu" ]]; then
-    if [[ ${os_version} -lt 16 ]]; then
-        echo -e "${red}请使用 Ubuntu 16 或更高版本的系统！${plain}\n" && exit 1
+    if ! command -v wget >/dev/null 2>&1; then
+        apk add wget
     fi
-elif [[ x"${release}" == x"debian" ]]; then
-    if [[ ${os_version} -lt 8 ]]; then
-        echo -e "${red}请使用 Debian 8 或更高版本的系统！${plain}\n" && exit 1
+    if ! command -v curl >/dev/null 2>&1; then
+        apk add curl
     fi
-fi
-
-install_base() {
-    if [[ x"${release}" == x"centos" ]]; then
-        yum install epel-release -y
-        yum install wget curl unzip tar crontabs socat iptables -y
-        yum install ca-certificates wget -y
-        update-ca-trust force-enable
-    else
-        apt-get update -y
-        apt install wget curl unzip tar cron socat iptables -y
-        apt-get install ca-certificates wget -y
-        update-ca-certificates
+    if ! command -v unzip >/dev/null 2>&1; then
+        apk add unzip
     fi
-}
-
+    if ! command -v iptables >/dev/null 2>&1; then
+        apk add iptables
+    fi
 # 0: running, 1: not running, 2: not installed
 check_status() {
-    if [[ ! -f /etc/systemd/system/V2bX.service ]]; then
+    if [[ ! -f /etc/init.d/V2bX ]]; then
         return 2
     fi
-    temp=$(systemctl status V2bX | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+    temp=$(rc-service XrayR status | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
     if [[ x"${temp}" == x"running" ]]; then
         return 0
     else
@@ -133,13 +100,13 @@ install_V2bX() {
     rm V2bX-linux.zip -f
     chmod +x V2bX
     mkdir /etc/V2bX/ -p
-    rm /etc/systemd/system/V2bX.service -f
-    file="https://github.com/114514-homo-lab/V2bX-script/raw/master/V2bX.service"
-    wget -q -N --no-check-certificate -O /etc/systemd/system/V2bX.service ${file}
-    #cp -f V2bX.service /etc/systemd/system/
-    systemctl daemon-reload
-    systemctl stop V2bX
-    systemctl enable V2bX
+    cd /etc/init.d
+    rc-service V2bX stop
+    rc-update del V2bX default
+    rm XrayR
+    wget https://raw.githubusercontent.com/mingge9527/V2bX-script-alpine/main/V2bX
+    chmod 777 V2bX
+    rc-update add V2bX default
     echo -e "${green}V2bX ${last_version}${plain} 安装完成，已设置开机自启"
     cp geoip.dat /etc/V2bX/
     cp geosite.dat /etc/V2bX/
